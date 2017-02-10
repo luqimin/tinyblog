@@ -12,7 +12,7 @@ let pool = mysql.createPool({
 
 let query = function (sql) {
     return new Promise((resolve, reject) => {
-        console.log('> 数据库操作: ' + sql);
+        console.log('> 数据库操作: ' + sql.substr(0, 200) + ' ...');
         pool.query(sql, function (err, results, fields) {
 
             if (err) {

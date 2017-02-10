@@ -32,9 +32,9 @@ router.get('/article/:title', async(ctx, next) => {
 
     let dbArticle = await articleHandle.get({url: `= '${ctx.params.title}'`});
 
-    if (dbArticle && dbArticle[0]) {
-        console.log('> 数据库获取文章id: ' + dbArticle[0].id);
-        ctx.response.body = render(template, Object.assign(dbArticle[0]), ctx);
+    if (dbArticle) {
+        console.log('> 数据库获取文章id: ' + dbArticle.id);
+        ctx.response.body = render(template, Object.assign(dbArticle), ctx);
         ctx.response.type = 'text/html';
     } else {
         if (await fs.exists(article)) {
@@ -44,15 +44,15 @@ router.get('/article/:title', async(ctx, next) => {
             let articleContent = marked(articleHandle.getContent(content)),
                 articleInfo = articleHandle.getInfo(content);
 
-            articleHandle.creat(articleContent, articleInfo);
+            //文章入库
+            articleHandle.insert(articleContent, articleInfo);
 
             ctx.response.body = render(template, Object.assign(articleInfo, {content: articleContent}), ctx);
             ctx.response.type = 'text/html';
             //从文章暂存文件夹删除文件
-            fs.unlink(article);
+            // fs.unlink(article);
         }
     }
-
 });
 
 //创建view路由
