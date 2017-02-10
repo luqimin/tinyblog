@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        <%= title %>
+    </title>
+    <meta name="keywords" content="tinyblog,xiaozhuye,小主页,luqimin,个人主页,网址导航,个性主页,vuejs,thinkjs">
+    <meta name="description" content="tinyblog">
+    <%- include('../../template/include/style'); %>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/highlight.css" rel="stylesheet">
+</head>
+
+<body>
+<%- include('../../template/include/header'); %>
+
+<div class="container blog-content">
+
+    <div class="row">
+
+        <div class="col-sm-9 blog-main">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <% articles.forEach(function(article){ %>
+                    <section class="blog-post">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="blog-post-meta">
+                                    <% article.tags.forEach(function(tag){ %>
+                                    <span class="label label-light label-success"><%= tag %></span>
+                                    <% }); %>
+                                    <p class="blog-post-date pull-right"><%= article.uploadtime %></p>
+                                </div>
+                                <div class="blog-post-content">
+                                    <a href="/article/<%= article.url %>" target="_blank">
+                                        <h2 class="blog-post-title"><%= article.title %></h2>
+                                    </a>
+                                    <p><%= article.brief %></p>
+                                    <a class="btn btn-info" href="/article/<%= article.url %>" target="_blank">详 情</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!-- /.blog-post -->
+                    <% }); %>
+
+                </div>
+            </div>
+
+            <nav>
+                <ul class="pager">
+                    <li><a class="withripple" href="#">Previous</a></li>
+                    <li><a class="withripple" href="#">Next</a></li>
+                </ul>
+            </nav>
+
+        </div><!-- /.blog-main -->
+
+        <%- include('../../template/include/article_sidebar'); %>
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<%- include('../../template/include/footer'); %>
+<%- include('../../template/include/script'); %>
+<script>
+    $.material.init();
+</script>
+
+<%- include('../../template/include/fonts'); %>
+</body>
+
+</html>

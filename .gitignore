@@ -1,0 +1,16 @@
+# Dependency directory
+node_modules/
+
+# IDE config
+.idea
+.vscode
+
+# OS files
+ehthumbs.db
+Thumbs.db
+
+# dist files
+/app
+
+# debugger
+npm-debug.log

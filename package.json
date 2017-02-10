@@ -1,0 +1,47 @@
+{
+  "name": "tinyblog",
+  "version": "1.0.0",
+  "description": "tinyblog with koa & react",
+  "main": "www/home/index.js",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "highlight.js": "^9.9.0",
+    "koa": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0",
+    "marked": "^0.3.6",
+    "mime": "^1.3.4",
+    "moment": "^2.17.1",
+    "mysql": "^2.13.0",
+    "mz": "^2.6.0",
+    "transliteration": "^1.5.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "bootstrap-material-design": "^0.5.10"
+  },
+  "scripts": {
+    "start": "babel src --out-dir app && node app/tiny/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel src --out-dir app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luqimin/tinyblog.git"
+  },
+  "keywords": [
+    "koa",
+    "react"
+  ],
+  "author": "luqimin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luqimin/tinyblog/issues"
+  },
+  "homepage": "https://github.com/luqimin/tinyblog#readme"
+}
