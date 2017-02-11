@@ -1,0 +1,16 @@
+{
+    "apps": [
+        {
+            "name": "xiaozhuye",
+            "script": "app/tiny/index.js",
+            "cwd": "/www/web/tinyblog",
+            "exec_mode": "fork",
+            "max_memory_restart": "1G",
+            "autorestart": true,
+            "node_args": [],
+            "args": [],
+            "env": {
+            }
+        }
+    ]
+}
