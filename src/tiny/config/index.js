@@ -5,7 +5,7 @@ const CONFIG = {
     moduleDir: 'src/module',
     templateDir: 'src/template',
     articleDir: '__article',
-    serverPort: '3000',
+    serverPort: '8666',
     database: {
         mysql: {
             host: '139.129.207.160',
