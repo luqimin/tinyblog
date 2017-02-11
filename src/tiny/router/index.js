@@ -28,13 +28,13 @@ router.get('/', async ctx => {
 //创建article路由
 router.get('/article/:title', async(ctx, next) => {
     let article = path.join(CONFIG.articleDir + '/' + ctx.params.title + '.md'),
-        template = path.join(CONFIG.templateDir + '/' + 'article.ejs');
+        templateDir = path.join(CONFIG.templateDir + '/' + 'article.ejs');
 
     let dbArticle = await articleHandle.get({url: `= '${ctx.params.title}'`});
 
     if (dbArticle) {
         console.log('> 数据库获取文章id: ' + dbArticle.id);
-        ctx.response.body = render(template, Object.assign(dbArticle), ctx);
+        ctx.response.body = render(templateDir, Object.assign(dbArticle), ctx);
         ctx.response.type = 'text/html';
     } else {
         if (await fs.exists(article)) {
@@ -47,7 +47,7 @@ router.get('/article/:title', async(ctx, next) => {
             //文章入库
             articleHandle.insert(articleContent, articleInfo);
 
-            ctx.response.body = render(template, Object.assign(articleInfo, {content: articleContent}), ctx);
+            ctx.response.body = render(templateDir, Object.assign(articleInfo, {content: articleContent}), ctx);
             ctx.response.type = 'text/html';
             //从文章暂存文件夹删除文件
             // fs.unlink(article);
@@ -55,73 +55,48 @@ router.get('/article/:title', async(ctx, next) => {
     }
 });
 
-//创建view路由
-// fs.readdir(CONFIG.moduleDir, (err, dirs) => {
-//     for (let dir of dirs) {
-//         let viewDir = path.join(CONFIG.moduleDir + '/' + dir);
-//         fs.readdir(viewDir, (err, files) => {
-//             let data = {},
-//                 url = '';
-//             for (let file of files) {
-//                 //获取model.js内容写入data
-//                 if (file.split('.')[0] == 'model') {
-//                     data = require(path.relative(__dirname, path.join(viewDir + '/' + file)));
-//                 }
-//                 //获取index.html内容render
-//                 if (file.split('.')[1] == 'html') {
-//                     url = path.join(viewDir + '/' + file);
-//                 }
-//             }
-//             router.get('/' + dir, async ctx => {
-//                 ctx.response.body = render(url, data, ctx)
-//                 ctx.response.type = 'text/html';
-//             });
-//         });
-//     }
-// });
+//创建模块路由
+router.get('/:module', async(ctx, next) => {
+    let moduleDir = path.join(CONFIG.moduleDir + '/' + ctx.params.module),
+        viewDir = path.join(moduleDir + '/' + 'index.ejs'),
+        modelDir = path.join(moduleDir + '/' + 'model.js');
 
-router.post('/signin', async(ctx, next) => {
-    console.log(ctx.request);
-    console.log(ctx.request.host);
-    console.log(ctx.request.body);
-    let name = ctx.request.body.name || '',
-        password = ctx.request.body.password || '';
-    console.log(`signin with name: ${name}, password: ${password}`);
-    if (name === 'koa' && password === '12345') {
-        ctx.response.body = `<h1>Welcome, ${name}!</h1>`;
-    } else {
-        ctx.response.body = `<h1>Login failed!</h1>
-        <p><a href="/">Try again</a></p>`;
+    let model = {};
+
+    if (await fs.exists(modelDir)) {
+        model = require(path.relative(__dirname, modelDir));
+    }
+    if (await fs.exists(viewDir)) {
+        ctx.response.body = render(viewDir, model, ctx);
+        ctx.response.type = 'text/html';
     }
 });
 
-function addMapping(router, mapping) {
-    for (var url in mapping) {
-        if (url.startsWith('GET ')) {
-            var path = url.substring(4);
-            router.get(path, mapping[url]);
-            console.log(`register URL mapping: GET ${path}`);
-        } else if (url.startsWith('POST ')) {
-            var path = url.substring(5);
-            router.post(path, mapping[url]);
-            console.log(`register URL mapping: POST ${path}`);
-        } else {
-            console.log(`invalid URL: ${url}`);
+//创建控制器路由
+function registerRouter(action, module) {
+    console.log(action);
+    console.log(`Process controller: ${module}...`);
+    for (let act in action) {
+        if (action.hasOwnProperty(act)) {
+            let dir = `/${module}/${act}`;
+            router.get(dir, action[act]);
+            router.post(dir, action[act]);
         }
     }
 }
 
-function addControllers(router) {
-    var files = fs.readdirSync('www');
-    var js_files = files.filter((f) => {
-        return f.endsWith('.js');
-    });
-
-    for (var f of js_files) {
-        console.log(`process controller: ${f}...`);
-        let mapping = require('www/' + f);
-        addMapping(router, mapping);
+async function addControllers() {
+    let files = fs.readdirSync(CONFIG.moduleDir);
+    for (let f of files) {
+        let dir = path.join(CONFIG.moduleDir, f),
+            controllerDir = path.join(dir, 'controller.js');
+        if (await fs.exists(controllerDir)) {
+            let action = require(path.relative(__dirname, controllerDir));
+            action && registerRouter(action, f);
+        }
     }
 }
+
+addControllers(router);
 
 export default router;

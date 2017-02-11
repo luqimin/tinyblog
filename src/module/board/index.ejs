@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        <%= title %>
+    </title>
+    <%- include('../../template/include/style'); %>
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<%- include('../../template/include/header'); %>
+
+<div class="container blog-content">
+
+    <div class="row">
+
+        <div class="col-sm-9 blog-main">
+
+            <section class="blog-post">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="blog-post-content">
+                            <h3><%= title %></h3>
+
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row-picture">
+                                        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"><i class="material-icons">reply</i></div>
+                                        <h4 class="list-group-item-heading">Tile with avatar</h4>
+
+                                        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget
+                                            metusDonec id elit non mi porta gravida at eget metusDonec id elit non mi
+                                            porta gravida at eget
+                                            metus</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-separator"></div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">face</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"><i class="material-icons">info</i></div>
+                                        <h4 class="list-group-item-heading">Tile with an icon</h4>
+
+                                        <p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-separator"></div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">face</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"><i class="material-icons">info</i></div>
+                                        <h4 class="list-group-item-heading">Tile with an icon</h4>
+
+                                        <p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-separator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- /.blog-post -->
+            <section class="blog-comments">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="header">添加一条留言</h3>
+                        <form class="inputs" action="#">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" for="name">昵称(必填)</label>
+                                        <input class="form-control" id="name" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" for="email">邮箱(必填)</label>
+                                        <input class="form-control" id="email" type="email">
+                                        <p class="help-block">邮箱将自动关联<code>Gravatar</code>头像, 未经过您的同意本站不会推送任何邮件</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" for="site">网址(选填)</label>
+                                        <input class="form-control" id="site" type="url">
+                                        <p class="help-block">标准网址, 如: <code>https://xiaozhuye.com</code></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group label-floating">
+                                        <label for="message" class="control-label">留言内容</label>
+                                        <div class="input-group">
+                                            <textarea id="message" class="form-control"></textarea>
+                                            <span class="input-group-btn">
+                                          <button type="submit" class="btn btn-fab btn-fab-mini">
+                                            <i class="material-icons">send</i>
+                                          </button>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <%- include('../../template/include/article_sidebar'); %>
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+<%- include('../../template/include/footer'); %>
+<%- include('../../template/include/script'); %>
+
+<script src="/static/js/home.js"></script>
+
+<%- include('../../template/include/fonts'); %>
+</body>
+
+</html>

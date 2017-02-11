@@ -2,18 +2,9 @@
 <html lang="zh-cn">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>
-        <%= title %>
-    </title>
-    <meta name="keywords" content="tinyblog,xiaozhuye,小主页,luqimin,个人主页,网址导航,个性主页,vuejs,thinkjs">
-    <meta name="description" content="tinyblog">
     <%- include('include/style'); %>
-    <link href="/static/css/style.css" rel="stylesheet">
     <link href="/static/css/highlight.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -63,9 +54,8 @@
 
 <%- include('include/footer'); %>
 <%- include('include/script'); %>
-<script>
-    $.material.init();
-</script>
+
+<script src="/static/js/article.js"></script>
 
 <%- include('include/fonts'); %>
 </body>

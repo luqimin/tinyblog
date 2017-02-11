@@ -1,5 +1,7 @@
 const CONFIG = {
     APPNAME: 'tiny',
+    keywords: 'tinyblog,xiaozhuye,小主页,luqimin,个人主页,网址导航,个性主页,vuejs,thinkjs',
+    description: 'tinyblog',
     homeDir: 'src/module/home',
     staticDir: 'www',
     moduleDir: 'src/module',
