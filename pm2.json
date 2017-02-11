@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "xiaozhuye",
+            "name": "tinyblog",
             "script": "app/tiny/index.js",
             "cwd": "/www/web/tinyblog",
             "exec_mode": "fork",
