@@ -16,19 +16,19 @@ marked.setOptions({
 
 //首页路由
 router.get('/', async ctx => {
-    let data = require(path.relative(__dirname, path.join(CONFIG.homeDir + '/model.js')));
-
+    let data = require(path.relative(__dirname, path.join(CONFIG.productionDir, CONFIG.homeDir, CONFIG.modelFile)));
+console.log(tiny);
     //获取前十个文章
     data.articles = await articleHandle.list(1, 10);
 
-    ctx.response.body = render(path.join(CONFIG.homeDir + '/' + 'index.ejs'), data, ctx);
+    ctx.response.body = render(path.join(CONFIG.developmentDir, CONFIG.homeDir, CONFIG.viewFile), data, ctx);
     ctx.response.type = 'text/html';
 });
 
 //创建article路由
 router.get('/article/:title', async(ctx, next) => {
-    let article = path.join(CONFIG.articleDir + '/' + ctx.params.title + '.md'),
-        templateDir = path.join(CONFIG.templateDir + '/' + 'article.ejs');
+    let article = path.join(CONFIG.articleDir, ctx.params.title + '.md'),
+        templateDir = path.join(CONFIG.templateDir, 'article.ejs');
 
     let dbArticle = await articleHandle.get({url: `= '${ctx.params.title}'`});
 
@@ -57,14 +57,17 @@ router.get('/article/:title', async(ctx, next) => {
 
 //创建模块路由
 router.get('/:module', async(ctx, next) => {
-    let moduleDir = path.join(CONFIG.moduleDir + '/' + ctx.params.module),
-        viewDir = path.join(moduleDir + '/' + 'index.ejs'),
-        modelDir = path.join(moduleDir + '/' + 'model.js');
+    let moduleDir = path.join(CONFIG.moduleDir, ctx.params.module),
+        viewDir = path.join(CONFIG.developmentDir, moduleDir, CONFIG.viewFile),
+        modelDir = path.join(CONFIG.productionDir, moduleDir, CONFIG.modelFile);
 
     let model = {};
 
     if (await fs.exists(modelDir)) {
         model = require(path.relative(__dirname, modelDir));
+        if (model.hasOwnProperty('default')) {
+            model = model.default;
+        }
     }
     if (await fs.exists(viewDir)) {
         ctx.response.body = render(viewDir, model, ctx);
@@ -74,8 +77,7 @@ router.get('/:module', async(ctx, next) => {
 
 //创建控制器路由
 function registerRouter(action, module) {
-    console.log(action);
-    console.log(`Process controller: ${module}...`);
+    console.log(`Process CONTROLLER: ${module}...`);
     for (let act in action) {
         if (action.hasOwnProperty(act)) {
             let dir = `/${module}/${act}`;
@@ -85,18 +87,21 @@ function registerRouter(action, module) {
     }
 }
 
-async function addControllers() {
-    let files = fs.readdirSync(CONFIG.moduleDir);
+function addControllers() {
+    let files = fs.readdirSync(path.join(CONFIG.productionDir, CONFIG.moduleDir));
     for (let f of files) {
-        let dir = path.join(CONFIG.moduleDir, f),
-            controllerDir = path.join(dir, 'controller.js');
-        if (await fs.exists(controllerDir)) {
+        let dir = path.join(CONFIG.productionDir, CONFIG.moduleDir, f),
+            controllerDir = path.join(dir, CONFIG.controllerFile);
+        if (fs.existsSync(controllerDir)) {
             let action = require(path.relative(__dirname, controllerDir));
+            if (action.hasOwnProperty('default')) {
+                action = action.default;
+            }
             action && registerRouter(action, f);
         }
     }
 }
 
-addControllers(router);
+addControllers();
 
 export default router;

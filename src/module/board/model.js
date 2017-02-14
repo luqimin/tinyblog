@@ -1,8 +1,6 @@
-/**
- * Created by lqm on 12/02/2017.
- */
-const data = {
+export default {
     title: 'TINYBLOG 留言板',
-};
+    comments(){
 
-module.exports = data;
+    }
+}

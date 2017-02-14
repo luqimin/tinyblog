@@ -1,8 +1,13 @@
 import fs from 'fs'
+import path from 'path'
 import ejs from 'ejs'
 import CONFIG from '../config'
 
 let render = function (url, model, ctx) {
+    if (url === undefined) {
+
+    }
+
     let opt = {
         cache: true,
         filename: url,
@@ -16,5 +21,8 @@ let render = function (url, model, ctx) {
     return ejs.render(html, Object.assign(defaultData, (ctx && ctx.state) || {}, model || {}), opt);
 
 };
+
+//注册tiny.display
+tiny.display = render;
 
 export default render;

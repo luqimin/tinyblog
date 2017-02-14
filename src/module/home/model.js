@@ -1,5 +1,3 @@
-const data = {
-    title: 'TINYBLOG',
-};
+export default class extends tiny.model {
 
-module.exports = data;
+};

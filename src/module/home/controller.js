@@ -1,8 +1,10 @@
-module.exports = {
-    test(){
-        console.log(321312321)
+export default {
+    async index(ctx){
+        console.log(tiny);
+
+        tiny.display();
     },
-    test2(ctx, next){
+    test2(ctx, next) {
         ctx.response.body = '2222222222';
-    }
-};
+    },
+}

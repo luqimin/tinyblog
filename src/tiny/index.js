@@ -1,7 +1,8 @@
 import Koa from 'koa'
-import bodyParser from './bodyparse'
+import './global'
+import bodyParser from 'koa-bodyparser'
 import router from './router'
-import staticServer from './static'
+import staticServer from 'koa-static'
 import CONFIG from './config'
 
 const app = new Koa();
@@ -19,6 +20,7 @@ app.use(async(ctx, next) => {
 app.use(staticServer(CONFIG.staticDir));
 app.use(bodyParser());
 app.use(router.routes());
+
 app.listen(CONFIG.serverPort);
 
 console.log(`${CONFIG.APPNAME} started at port ${CONFIG.serverPort}...`);
